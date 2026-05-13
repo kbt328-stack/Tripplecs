@@ -1,272 +1,2699 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Triple C's — The Road to a National Brand</title>
-  <meta name="description" content="A 24-month roadmap from one smoking pit to a franchise empire. The Five-Phase Strategic Growth Proposal for Triple C's.">
-  <link rel="stylesheet" href="assets/brand.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Triple C's — The Road to a National Brand</title>
+<meta name="description" content="A 24-month strategic roadmap from local barbecue legend to national franchise brand.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Bungee+Shade&family=Special+Elite&family=Alfa+Slab+One&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --char: #1A0F08;
+    --smoke-dark: #2B1810;
+    --mahog: #722F1B;
+    --rust: #A03B17;
+    --flame: #D4521A;
+    --ember: #E8821B;
+    --gold: #E8B547;
+    --gold-bright: #F4CC5C;
+    --parchment: #F2E4C1;
+    --paper: #E8D4A3;
+    --paper-shadow: #C4A777;
+    --ash: #6B5A47;
+    --cream: #FAF1DC;
+    --teal: #1E3A52;
+    --teal-mid: #2B5170;
+    --teal-light: #3A6B8C;
+    --bone: #FFF5DE;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+  html, body {
+    background: var(--char);
+    font-family: 'Crimson Pro', serif;
+    color: var(--char);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--flame); color: var(--cream); }
+
+  img, svg { display: block; }
+
+  /* ============================================
+     STICKY NAV
+     ============================================ */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(26, 15, 8, 0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--gold);
+    transform: translateY(-100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 12px 0;
+  }
+  .nav.visible { transform: translateY(0); }
+  .nav::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold) 20%, var(--gold) 80%, transparent);
+    opacity: 0.4;
+  }
+  .nav-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .nav-brand {
+    font-family: 'Rye', serif;
+    font-size: 22px;
+    color: var(--gold-bright);
+    text-shadow: 2px 2px 0 var(--mahog);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--parchment);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--gold-bright); }
+  .nav-links a:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--flame);
+  }
+
+  /* Documents dropdown */
+  .nav-docs { position: relative; }
+  .nav-docs-toggle {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--parchment);
+    text-transform: uppercase;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .nav-docs-toggle:hover { color: var(--gold-bright); }
+  .nav-docs-toggle svg { transition: transform 0.25s; }
+  .nav-docs.open .nav-docs-toggle svg { transform: rotate(180deg); }
+  .nav-docs.open .nav-docs-toggle { color: var(--gold-bright); }
+
+  .nav-docs-menu {
+    position: absolute;
+    top: calc(100% + 14px);
+    right: 0;
+    min-width: 240px;
+    background: var(--char);
+    border: 1px solid var(--gold);
+    list-style: none;
+    padding: 8px 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.25s, transform 0.25s;
+    box-shadow: 0 12px 28px -6px rgba(0,0,0,0.6);
+  }
+  .nav-docs-menu::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    right: 22px;
+    width: 12px;
+    height: 12px;
+    background: var(--char);
+    border-top: 1px solid var(--gold);
+    border-left: 1px solid var(--gold);
+    transform: rotate(45deg);
+  }
+  .nav-docs.open .nav-docs-menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .nav-docs-menu li { margin: 0; }
+  .nav-docs-menu a {
+    display: block;
+    padding: 12px 20px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--parchment);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+    line-height: 1.4;
+  }
+  .nav-docs-menu a:hover {
+    background: rgba(212, 82, 26, 0.15);
+    color: var(--gold-bright);
+  }
+  .nav-docs-menu a:hover::after { display: none; }
+
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; color: var(--gold); padding: 8px; }
+
+  @media (max-width: 820px) {
+    .nav-links {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--char);
+      flex-direction: column;
+      padding: 24px 28px;
+      gap: 20px;
+      border-bottom: 1px solid var(--gold);
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+    .nav-links.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .nav-links a { font-size: 13px; padding: 8px 0; display: block; }
+    .nav-toggle { display: block; }
+
+    /* Documents submenu collapses into the stacked mobile menu */
+    .nav-docs-toggle { font-size: 13px; padding: 8px 0; width: 100%; justify-content: space-between; }
+    .nav-docs-menu {
+      position: static;
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+      min-width: 0;
+      width: 100%;
+      border: none;
+      border-left: 2px solid var(--flame);
+      background: rgba(0,0,0,0.3);
+      box-shadow: none;
+      padding: 4px 0 4px 14px;
+      margin-top: 6px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease, margin 0.3s ease;
+    }
+    .nav-docs-menu::before { display: none; }
+    .nav-docs.open .nav-docs-menu {
+      max-height: 200px;
+      padding: 8px 0 8px 14px;
+    }
+    .nav-docs-menu a { padding: 10px 0 10px 14px; font-size: 12px; }
+  }
+
+  /* ============================================
+     HERO
+     ============================================ */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    background:
+      radial-gradient(ellipse at top, #2B1810 0%, #0F0805 70%),
+      var(--char);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 80px 24px 60px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 200px rgba(0,0,0,0.6);
+    pointer-events: none;
+  }
+
+  /* Smoke wisps */
+  .smoke-stage {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .smoke {
+    position: absolute;
+    bottom: -100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200, 180, 150, 0.35) 0%, transparent 70%);
+    filter: blur(24px);
+    animation: rise 10s infinite ease-in;
+    opacity: 0;
+  }
+
+  .smoke:nth-child(1) { left: 8%; width: 200px; height: 200px; animation-delay: 0s; animation-duration: 11s; }
+  .smoke:nth-child(2) { left: 22%; width: 160px; height: 160px; animation-delay: 2.5s; animation-duration: 13s; }
+  .smoke:nth-child(3) { left: 40%; width: 240px; height: 240px; animation-delay: 5s; animation-duration: 12s; }
+  .smoke:nth-child(4) { left: 58%; width: 180px; height: 180px; animation-delay: 1.5s; animation-duration: 14s; }
+  .smoke:nth-child(5) { left: 75%; width: 200px; height: 200px; animation-delay: 4s; animation-duration: 11.5s; }
+  .smoke:nth-child(6) { left: 88%; width: 150px; height: 150px; animation-delay: 6.5s; animation-duration: 13.5s; }
+
+  @keyframes rise {
+    0%   { transform: translateY(0) translateX(0) scale(0.3); opacity: 0; }
+    15%  { opacity: 0.5; }
+    50%  { transform: translateY(-300px) translateX(30px) scale(1.1); opacity: 0.35; }
+    100% { transform: translateY(-700px) translateX(-40px) scale(2); opacity: 0; }
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  .pre-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 28px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 0.2s forwards;
+  }
+  .pre-title::before, .pre-title::after {
+    content: '';
+    width: 50px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .brand {
+    font-family: 'Rye', serif;
+    font-size: clamp(64px, 13vw, 160px);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+    text-shadow:
+      4px 4px 0 var(--mahog),
+      8px 8px 0 var(--rust),
+      12px 12px 30px rgba(0,0,0,0.6);
+    opacity: 0;
+    animation: fadeUp 1.2s ease-out 0.4s forwards;
+  }
+
+  .brand-sub {
+    font-family: 'Alfa Slab One', serif;
+    font-size: clamp(20px, 3.2vw, 36px);
+    color: var(--gold-bright);
+    letter-spacing: 0.04em;
+    margin-top: 18px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+    opacity: 0;
+    animation: fadeUp 1s ease-out 0.7s forwards;
+  }
+
+  .underline-flair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: 28px 0 0;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 0.9s forwards;
+  }
+  .underline-flair .swoop { width: 140px; height: 14px; }
+  .underline-flair .star { font-size: 24px; color: var(--flame); }
+
+  .tagline {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.2vw, 26px);
+    color: var(--parchment);
+    margin-top: 22px;
+    font-weight: 500;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.4;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 1.1s forwards;
+  }
+  .tagline strong {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--gold-bright);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scroll indicator */
+  .scroll-cue {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+    color: var(--gold);
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    text-align: center;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 1.5s forwards;
+  }
+  .scroll-cue::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 30px;
+    background: var(--gold);
+    margin: 12px auto 0;
+    animation: scrollPulse 2s ease-in-out infinite;
+    transform-origin: top;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { transform: scaleY(0.3); opacity: 0.3; }
+    50% { transform: scaleY(1); opacity: 1; }
+  }
+
+  /* ============================================
+     SECTION FOUNDATIONS
+     ============================================ */
+  section {
+    position: relative;
+  }
+
+  .section-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 100px 32px;
+  }
+
+  .section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .section-eyebrow::before, .section-eyebrow::after {
+    content: '✦';
+    color: var(--flame);
+    font-size: 12px;
+  }
+
+  .section-title {
+    font-family: 'Alfa Slab One', serif;
+    font-size: clamp(36px, 5.5vw, 64px);
+    color: var(--char);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .section-title em {
+    font-style: italic;
+    color: var(--flame);
+  }
+  .section-sub {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(16px, 1.6vw, 20px);
+    font-style: italic;
+    color: var(--mahog);
+    margin-top: 14px;
+    max-width: 720px;
+  }
+
+  .section-head { text-align: center; margin-bottom: 64px; }
+  .section-head.left { text-align: left; }
+  .section-head.left .section-sub { margin-left: 0; }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal.d1 { transition-delay: 0.15s; }
+  .reveal.d2 { transition-delay: 0.3s; }
+  .reveal.d3 { transition-delay: 0.45s; }
+  .reveal.d4 { transition-delay: 0.6s; }
+
+  /* ============================================
+     STAKES BAR
+     ============================================ */
+  .stakes {
+    background:
+      linear-gradient(180deg, var(--char) 0%, var(--smoke-dark) 100%);
+    color: var(--cream);
+    padding: 90px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stakes::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)' opacity='0.4'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .stakes-wrap {
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .stakes-head {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .stakes-head .section-eyebrow { color: var(--gold); }
+  .stakes-head .section-eyebrow::before,
+  .stakes-head .section-eyebrow::after { color: var(--gold-bright); }
+  .stakes-head .section-title { color: var(--cream); }
+  .stakes-head .section-title em { color: var(--gold-bright); }
+  .stakes-head .section-sub { color: var(--parchment); margin-left: auto; margin-right: auto; }
+
+  .stakes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 3px solid var(--gold);
+    border-radius: 4px;
+    background: rgba(0,0,0,0.35);
+    padding: 40px 20px;
+    position: relative;
+    box-shadow: 0 8px 0 -2px var(--mahog), 0 20px 40px -10px rgba(0,0,0,0.5);
+  }
+  .stakes-grid::before, .stakes-grid::after,
+  .stakes-grid > .rivet-tl, .stakes-grid > .rivet-br {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
+  }
+  .stakes-grid::before { top: -8px; left: -8px; }
+  .stakes-grid::after { top: -8px; right: -8px; }
+  .stakes-grid > .rivet-tl { bottom: -8px; left: -8px; }
+  .stakes-grid > .rivet-br { bottom: -8px; right: -8px; }
+
+  .stake {
+    text-align: center;
+    padding: 16px 20px;
+    border-right: 1px dashed rgba(232, 181, 71, 0.3);
+  }
+  .stake:last-of-type { border-right: none; }
+
+  .stake-icon-wrap {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 16px;
+    color: var(--gold);
+  }
+  .stake-value {
+    font-family: 'Alfa Slab One', serif;
+    font-size: clamp(28px, 3.4vw, 44px);
+    color: var(--gold-bright);
+    line-height: 1;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    letter-spacing: -0.01em;
+  }
+  .stake-label {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: rgba(250, 241, 220, 0.75);
+    text-transform: uppercase;
+    margin-top: 10px;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 860px) {
+    .stakes-grid { grid-template-columns: repeat(2, 1fr); }
+    .stake { border-right: none; border-bottom: 1px dashed rgba(232, 181, 71, 0.3); padding: 28px 16px; }
+    .stake:nth-child(odd):not(.rivet-tl):not(.rivet-br) { border-right: 1px dashed rgba(232, 181, 71, 0.3); }
+    .stake:nth-last-child(-n+2) { border-bottom: none; }
+  }
+
+  /* ============================================
+     OPPORTUNITY — TWO PATHS
+     ============================================ */
+  .opportunity {
+    background: var(--parchment);
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n3'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n3)' opacity='0.12'/%3E%3C/svg%3E");
+  }
+
+  .paths {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+
+  @media (max-width: 880px) { .paths { grid-template-columns: 1fr; gap: 24px; } }
+
+  .path {
+    border: 3px solid;
+    padding: 36px 32px 32px;
+    position: relative;
+    background: var(--cream);
+    box-shadow: 0 8px 0 -2px rgba(0,0,0,0.15), 0 16px 40px -12px rgba(0,0,0,0.2);
+  }
+
+  .path-a {
+    border-color: var(--ash);
+    color: var(--smoke-dark);
+  }
+  .path-b {
+    border-color: var(--flame);
+    background: linear-gradient(180deg, var(--cream) 0%, var(--paper) 100%);
+  }
+
+  .path-stamp {
+    position: absolute;
+    top: -16px;
+    left: 24px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    background: var(--ash);
+    color: var(--cream);
+  }
+  .path-b .path-stamp {
+    background: var(--flame);
+    color: var(--cream);
+  }
+
+  .path-title {
+    font-family: 'Alfa Slab One', serif;
+    font-size: clamp(26px, 3vw, 34px);
+    color: var(--char);
+    text-transform: uppercase;
+    line-height: 1;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  .path-b .path-title { color: var(--mahog); }
+
+  .path-headline {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ash);
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px dashed var(--paper-shadow);
+  }
+  .path-b .path-headline { color: var(--rust); border-bottom-color: var(--flame); }
+
+  .path-list {
+    list-style: none;
+  }
+  .path-list li {
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 10px 0 10px 28px;
+    position: relative;
+    color: var(--smoke-dark);
+  }
+  .path-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 18px;
+    width: 14px;
+    height: 1px;
+    background: var(--ash);
+  }
+  .path-b .path-list li::before { background: var(--flame); height: 2px; }
+
+  .path-outcome {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 2px solid var(--paper-shadow);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .path-b .path-outcome { border-top-color: var(--flame); }
+  .path-outcome-label {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ash);
+  }
+  .path-outcome-value {
+    font-family: 'Alfa Slab One', serif;
+    font-size: clamp(22px, 2.4vw, 30px);
+    color: var(--char);
+    line-height: 1;
+  }
+  .path-b .path-outcome-value { color: var(--flame); }
+
+  .window-callout {
+    background: var(--char);
+    color: var(--cream);
+    padding: 36px 40px;
+    text-align: center;
+    border: 3px solid var(--gold);
+    position: relative;
+    box-shadow: 0 8px 0 -2px var(--mahog), 0 16px 40px -10px rgba(0,0,0,0.3);
+  }
+  .window-callout::before,
+  .window-callout::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--flame);
+  }
+  .window-callout::before { top: -8px; left: -8px; border-right: none; border-bottom: none; }
+  .window-callout::after { bottom: -8px; right: -8px; border-left: none; border-top: none; }
+  .window-callout-eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .window-callout-text {
+    font-family: 'Alfa Slab One', serif;
+    font-size: clamp(20px, 2.5vw, 28px);
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+  .window-callout-text em {
+    color: var(--flame);
+    font-style: italic;
+  }
+
+  /* ============================================
+     ROADMAP — FIVE PHASES
+     ============================================ */
+  .roadmap {
+    background:
+      linear-gradient(180deg, var(--parchment) 0%, var(--paper) 100%);
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n4'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n4)' opacity='0.12'/%3E%3C/svg%3E"),
+      linear-gradient(180deg, var(--parchment) 0%, var(--paper) 100%);
+  }
+
+  .road-container {
+    position: relative;
+    margin-top: 40px;
+  }
+
+  .road-path-deco {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    z-index: 0;
+    display: none;
+  }
+  .road-path-deco svg { width: 100%; height: 100%; overflow: visible; }
+
+  @media (min-width: 1000px) {
+    .road-path-deco { display: block; }
+  }
+
+  .phases-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+  }
+  @media (max-width: 999px) {
+    .phases-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+
+  .phase-card {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .phase-card:hover { transform: translateY(-6px); }
+  .phase-card:hover .phase-badge { box-shadow: 0 0 0 2px var(--char), 0 16px 32px -6px rgba(0,0,0,0.6), inset 0 -10px 20px rgba(0,0,0,0.3); }
+
+  .phase-badge {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 22px;
+    background: radial-gradient(circle at 30% 30%, var(--rust) 0%, var(--mahog) 60%, var(--smoke-dark) 100%);
+    border: 4px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: var(--cream);
+    box-shadow:
+      0 0 0 2px var(--char),
+      0 12px 24px -6px rgba(0,0,0,0.5),
+      inset 0 -10px 20px rgba(0,0,0,0.3);
+    transition: box-shadow 0.3s;
+  }
+  .phase-badge::before {
+    content: '';
+    position: absolute;
+    inset: -14px;
+    border: 2px dashed var(--mahog);
+    border-radius: 50%;
+    opacity: 0.45;
+  }
+  .phase-badge-icon {
+    width: 52px;
+    height: 52px;
+    color: var(--gold-bright);
+    margin-bottom: 4px;
+  }
+  .phase-badge-num {
+    font-family: 'Alfa Slab One', serif;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--gold-bright);
+    letter-spacing: 0.05em;
+  }
+
+  .phase-time {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  .phase-name {
+    font-family: 'Alfa Slab One', serif;
+    font-size: 20px;
+    color: var(--char);
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+    margin-bottom: 14px;
+    min-height: 44px;
+  }
+  .phase-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+  .phase-tag {
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px;
+    color: var(--smoke-dark);
+    line-height: 1.35;
+    font-weight: 500;
+    padding: 6px 12px;
+    background: rgba(255, 245, 222, 0.7);
+    border-left: 2px solid var(--flame);
+    text-align: left;
+    width: 100%;
+  }
+
+  /* ============================================
+     CAPE COD CATALYST
+     ============================================ */
+  .cape {
+    background:
+      linear-gradient(135deg, var(--teal) 0%, var(--teal-mid) 50%, var(--teal-light) 100%);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+  }
+  .cape::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n5'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n5)' opacity='0.18'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .cape::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60' preserveAspectRatio='none'%3E%3Cpath d='M0,30 Q150,8 300,30 T600,30 T900,30 T1200,30 L1200,60 L0,60 Z' fill='%23E8B547' opacity='0.15'/%3E%3Cpath d='M0,38 Q150,16 300,38 T600,38 T900,38 T1200,38 L1200,60 L0,60 Z' fill='%23E8B547' opacity='0.22'/%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    pointer-events: none;
+  }
+
+  .cape-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 110px 32px 130px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cape-ribbon-top {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--char);
+    padding: 8px 22px 10px;
+    font-family: 'Alfa Slab One', serif;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 12px 100%);
+    margin-bottom: 28px;
+  }
+
+  .cape-head { margin-bottom: 56px; }
+  .cape-head .section-eyebrow { color: var(--gold); }
+  .cape-head .section-eyebrow::before,
+  .cape-head .section-eyebrow::after { color: var(--gold-bright); }
+  .cape-title {
+    font-family: 'Alfa Slab One', serif;
+    font-size: clamp(40px, 6vw, 72px);
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .cape-title em {
+    font-style: italic;
+    color: var(--cream);
+  }
+  .cape-time {
+    font-family: 'Special Elite', monospace;
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    color: rgba(232, 181, 71, 0.85);
+    text-transform: uppercase;
+    margin-top: 14px;
+  }
+
+  .cape-body {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 980px) {
+    .cape-body { grid-template-columns: 1fr; }
+  }
+
+  .cape-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  @media (max-width: 720px) {
+    .cape-pillars { grid-template-columns: 1fr; gap: 22px; }
+  }
+
+  .cape-pillar {
+    position: relative;
+    padding-top: 12px;
+  }
+  .cape-pillar-num {
+    font-family: 'Alfa Slab One', serif;
+    font-size: 44px;
+    color: var(--gold-bright);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .cape-pillar-head {
+    font-family: 'Alfa Slab One', serif;
+    font-size: 17px;
+    color: var(--cream);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 10px;
+  }
+  .cape-pillar-body {
+    font-size: 15px;
+    line-height: 1.5;
+    color: rgba(250, 241, 220, 0.9);
+    font-family: 'Crimson Pro', serif;
+  }
+
+  .cape-roi {
+    text-align: center;
+    padding: 36px 28px;
+    background: rgba(0,0,0,0.3);
+    border: 3px solid var(--gold-bright);
+    border-radius: 4px;
+    box-shadow: 0 8px 0 -2px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .cape-roi::before,
+  .cape-roi::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--gold-bright);
+    border-radius: 50%;
+  }
+  .cape-roi::before { top: -6px; left: -6px; }
+  .cape-roi::after { bottom: -6px; right: -6px; }
+  .cape-roi-num {
+    font-family: 'Bungee Shade', cursive;
+    font-size: clamp(64px, 9vw, 96px);
+    color: var(--gold-bright);
+    line-height: 1;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  .cape-roi-label {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    color: var(--cream);
+    text-transform: uppercase;
+    margin-top: 12px;
+    line-height: 1.4;
+  }
+
+  .cape-bottom-note {
+    margin-top: 56px;
+    text-align: center;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2vw, 24px);
+    color: var(--cream);
+    max-width: 920px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+    padding: 28px 32px;
+    border-top: 1px dashed rgba(232, 181, 71, 0.4);
+    border-bottom: 1px dashed rgba(232, 181, 71, 0.4);
+  }
+  .cape-bottom-note strong {
+    font-style: normal;
+    color: var(--gold-bright);
+    font-weight: 700;
+  }
+
+  .cape-connections {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 720px) {
+    .cape-connections { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .cape-connections { grid-template-columns: 1fr; }
+  }
+  .cape-connection {
+    padding: 16px 18px;
+    background: rgba(0,0,0,0.25);
+    border-left: 3px solid var(--gold-bright);
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+  .cape-connection strong {
+    display: block;
+    font-family: 'Alfa Slab One', serif;
+    font-size: 12px;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  /* ============================================
+     VALUE QUANTIFIED
+     ============================================ */
+  .value {
+    background:
+      linear-gradient(180deg, var(--paper) 0%, var(--parchment) 100%);
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n6'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n6)' opacity='0.1'/%3E%3C/svg%3E"),
+      linear-gradient(180deg, var(--paper) 0%, var(--parchment) 100%);
+  }
+
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    margin-bottom: 56px;
+  }
+  @media (max-width: 880px) { .value-grid { grid-template-columns: 1fr; gap: 22px; } }
+
+  .value-card {
+    background: var(--cream);
+    border: 2px solid var(--mahog);
+    padding: 28px 30px;
+    position: relative;
+    box-shadow: 0 6px 0 -2px var(--mahog), 0 12px 28px -10px rgba(0,0,0,0.2);
+    transition: transform 0.3s;
+  }
+  .value-card:hover { transform: translateY(-4px); }
+  .value-card::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 20px;
+    width: 40px;
+    height: 4px;
+    background: var(--flame);
+  }
+
+  .value-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--paper-shadow);
+  }
+  .value-card-title {
+    font-family: 'Alfa Slab One', serif;
+    font-size: 22px;
+    color: var(--char);
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+  .value-card-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--flame);
+    flex-shrink: 0;
+  }
+
+  .value-rows { display: flex; flex-direction: column; gap: 10px; }
+  .value-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    color: var(--smoke-dark);
+    padding: 6px 0;
+  }
+  .value-row .v-label { flex: 1; }
+  .value-row .v-num {
+    font-family: 'Special Elite', monospace;
+    color: var(--mahog);
+    white-space: nowrap;
+  }
+  .value-row.savings {
+    border-top: 2px solid var(--flame);
+    padding-top: 12px;
+    margin-top: 6px;
+  }
+  .value-row.savings .v-label {
+    font-family: 'Alfa Slab One', serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--char);
+  }
+  .value-row.savings .v-num {
+    font-family: 'Alfa Slab One', serif;
+    font-size: 18px;
+    color: var(--flame);
+  }
+
+  .value-total {
+    background: var(--char);
+    color: var(--cream);
+    padding: 56px 40px;
+    text-align: center;
+    border: 3px solid var(--gold);
+    position: relative;
+    box-shadow: 0 8px 0 -2px var(--mahog), 0 20px 50px -12px rgba(0,0,0,0.4);
+  }
+  .value-total-eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .value-total-num {
+    font-family: 'Alfa Slab One', serif;
+    font-size: clamp(48px, 8vw, 96px);
+    color: var(--gold-bright);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  .value-total-label {
+    font-family: 'Special Elite', monospace;
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    color: var(--parchment);
+    text-transform: uppercase;
+    margin-top: 18px;
+  }
+  .value-total-quote {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: clamp(17px, 1.8vw, 22px);
+    color: var(--cream);
+    max-width: 720px;
+    margin: 32px auto 0;
+    line-height: 1.5;
+    padding-top: 28px;
+    border-top: 1px dashed rgba(232, 181, 71, 0.4);
+  }
+  .value-total-quote strong {
+    font-style: normal;
+    color: var(--gold-bright);
+  }
+
+  /* ============================================
+     VALUATION ARC
+     ============================================ */
+  .arc-section {
+    background: var(--char);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .arc-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n7'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n7)' opacity='0.15'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .arc-wrap { position: relative; z-index: 2; }
+
+  .arc-head .section-eyebrow { color: var(--gold); }
+  .arc-head .section-eyebrow::before,
+  .arc-head .section-eyebrow::after { color: var(--gold-bright); }
+  .arc-head .section-title { color: var(--cream); }
+  .arc-head .section-title em { color: var(--gold-bright); }
+  .arc-head .section-sub { color: var(--parchment); margin-left: auto; margin-right: auto; }
+
+  .arc-card {
+    background:
+      linear-gradient(180deg, var(--paper) 0%, var(--parchment) 100%);
+    border: 3px solid var(--gold);
+    padding: 40px 44px 36px;
+    position: relative;
+    box-shadow: 0 12px 0 -3px var(--mahog), 0 24px 50px -10px rgba(0,0,0,0.5);
+    color: var(--smoke-dark);
+  }
+
+  .arc-corner {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border: 3px solid var(--flame);
+  }
+  .arc-corner.tl { top: -3px; left: -3px; border-right: none; border-bottom: none; }
+  .arc-corner.tr { top: -3px; right: -3px; border-left: none; border-bottom: none; }
+  .arc-corner.bl { bottom: -3px; left: -3px; border-right: none; border-top: none; }
+  .arc-corner.br { bottom: -3px; right: -3px; border-left: none; border-top: none; }
+
+  .arc-stamp {
+    display: inline-block;
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    color: var(--mahog);
+    text-transform: uppercase;
+    border: 2px solid var(--mahog);
+    padding: 8px 16px;
+    transform: rotate(-2deg);
+    margin-bottom: 12px;
+  }
+
+  .arc-chart {
+    height: 240px;
+    position: relative;
+    margin: 16px 0 28px;
+  }
+  .arc-chart svg { width: 100%; height: 100%; overflow: visible; }
+
+  .arc-curve {
+    stroke-dasharray: 2500;
+    stroke-dashoffset: 2500;
+    transition: stroke-dashoffset 3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .arc-chart.drawn .arc-curve { stroke-dashoffset: 0; }
+
+  .arc-marker {
+    transform-origin: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .arc-chart.drawn .arc-marker { opacity: 1; animation: pulseDot 2.4s infinite ease-in-out; }
+  .arc-chart.drawn .arc-marker.m2 { animation-delay: 0.3s; }
+  .arc-chart.drawn .arc-marker.m3 { animation-delay: 0.6s; }
+  .arc-chart.drawn .arc-marker.m4 { animation-delay: 0.9s; }
+  .arc-chart.drawn .arc-marker.m5 { animation-delay: 1.2s; }
+
+  @keyframes pulseDot {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+  }
+
+  .arc-stops {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin-top: 12px;
+  }
+  @media (max-width: 760px) {
+    .arc-stops { grid-template-columns: repeat(2, 1fr); }
+    .arc-chart { height: 180px; }
+  }
+  @media (max-width: 440px) { .arc-stops { grid-template-columns: 1fr; } }
+
+  .arc-stop {
+    text-align: center;
+    padding: 14px 8px 0;
+    border-top: 2px solid var(--rust);
+    position: relative;
+  }
+  .arc-stop::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 14px;
+    background: var(--flame);
+    border-radius: 50%;
+    border: 2px solid var(--parchment);
+  }
+  .arc-stop:last-child::before {
+    background: var(--gold-bright);
+    width: 18px;
+    height: 18px;
+    top: -10px;
+  }
+  .arc-stop-time {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--ash);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .arc-stop-val {
+    font-family: 'Alfa Slab One', serif;
+    font-size: 22px;
+    color: var(--mahog);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .arc-stop:last-child .arc-stop-val {
+    color: var(--flame);
+    font-size: 26px;
+  }
+  .arc-stop-desc {
+    font-family: 'Crimson Pro', serif;
+    font-size: 13px;
+    color: var(--smoke-dark);
+    margin-top: 6px;
+    line-height: 1.3;
+    font-style: italic;
+  }
+
+  /* ============================================
+     MARKETING ENGINE
+     ============================================ */
+  .marketing {
+    background: var(--parchment);
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n8'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n8)' opacity='0.12'/%3E%3C/svg%3E");
+  }
+
+  .mkt-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 880px) { .mkt-pillars { grid-template-columns: 1fr; gap: 20px; } }
+
+  .mkt-pillar {
+    background: var(--cream);
+    border: 2px solid var(--smoke-dark);
+    padding: 32px 28px;
+    text-align: center;
+    box-shadow: 0 6px 0 -2px var(--mahog), 0 14px 30px -8px rgba(0,0,0,0.2);
+  }
+  .mkt-pillar-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 18px;
+    color: var(--flame);
+  }
+  .mkt-pillar-name {
+    font-family: 'Alfa Slab One', serif;
+    font-size: 18px;
+    color: var(--char);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+  }
+  .mkt-pillar-body {
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px;
+    color: var(--smoke-dark);
+    line-height: 1.5;
+  }
+
+  .mkt-budget {
+    background: var(--cream);
+    border: 2px solid var(--mahog);
+    overflow: hidden;
+    box-shadow: 0 6px 0 -2px var(--mahog), 0 14px 30px -10px rgba(0,0,0,0.2);
+  }
+  .mkt-budget-head {
+    background: var(--smoke-dark);
+    color: var(--gold-bright);
+    padding: 16px 24px;
+    font-family: 'Alfa Slab One', serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .mkt-budget-table {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1.6fr;
+  }
+  .mkt-budget-table > div {
+    padding: 14px 20px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px;
+    border-bottom: 1px dashed var(--paper-shadow);
+    color: var(--smoke-dark);
+  }
+  .mkt-budget-table .mh {
+    background: var(--paper);
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--mahog);
+    font-weight: bold;
+  }
+  .mkt-budget-table .mn {
+    font-family: 'Special Elite', monospace;
+    color: var(--flame);
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .mkt-budget-table > div:nth-last-child(-n+3) { border-bottom: none; }
+  @media (max-width: 640px) {
+    .mkt-budget-table { grid-template-columns: 1fr; }
+    .mkt-budget-table > div { border-bottom: 1px dashed var(--paper-shadow); }
+  }
+
+  .mkt-callout {
+    margin-top: 36px;
+    text-align: center;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2vw, 24px);
+    color: var(--mahog);
+    padding: 24px 32px;
+    border-top: 1px dashed var(--paper-shadow);
+    border-bottom: 1px dashed var(--paper-shadow);
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .mkt-callout strong {
+    font-style: normal;
+    color: var(--flame);
+    font-weight: 700;
+  }
+
+  /* ============================================
+     NEXT STEPS
+     ============================================ */
+  .next {
+    background:
+      linear-gradient(180deg, var(--paper) 0%, var(--parchment) 100%);
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n9'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n9)' opacity='0.1'/%3E%3C/svg%3E"),
+      linear-gradient(180deg, var(--paper) 0%, var(--parchment) 100%);
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 56px;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: center;
+    background: var(--cream);
+    border: 2px solid var(--mahog);
+    padding: 24px 32px;
+    box-shadow: 0 6px 0 -2px var(--mahog), 0 12px 24px -10px rgba(0,0,0,0.2);
+    transition: transform 0.3s;
+  }
+  .step:hover { transform: translateX(6px); }
+  @media (max-width: 640px) {
+    .step { grid-template-columns: 1fr; gap: 16px; text-align: center; }
+  }
+
+  .step-seal {
+    width: 90px;
+    height: 90px;
+    border: 3px solid var(--flame);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--flame);
+    font-family: 'Alfa Slab One', serif;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.1;
+    position: relative;
+    flex-shrink: 0;
+    background: var(--cream);
+  }
+  @media (max-width: 640px) {
+    .step-seal { margin: 0 auto; }
+  }
+  .step-seal::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px solid var(--flame);
+    border-radius: 50%;
+  }
+  .step-seal-num {
+    font-family: 'Alfa Slab One', serif;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--flame);
+  }
+  .step-seal-label {
+    font-family: 'Special Elite', monospace;
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    color: var(--mahog);
+    margin-top: 4px;
+  }
+
+  .step-content {}
+  .step-title {
+    font-family: 'Alfa Slab One', serif;
+    font-size: 20px;
+    color: var(--char);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+  }
+  .step-body {
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    color: var(--smoke-dark);
+    line-height: 1.5;
+  }
+
+  .urgency-callout {
+    background: var(--char);
+    color: var(--cream);
+    padding: 40px 36px;
+    text-align: center;
+    border: 3px solid var(--flame);
+    position: relative;
+    box-shadow: 0 8px 0 -2px var(--mahog), 0 20px 40px -10px rgba(0,0,0,0.3);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .urgency-callout-eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    color: var(--flame);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .urgency-callout-text {
+    font-family: 'Alfa Slab One', serif;
+    font-size: clamp(22px, 2.8vw, 32px);
+    text-transform: uppercase;
+    line-height: 1.2;
+    color: var(--cream);
+  }
+  .urgency-callout-text em {
+    color: var(--gold-bright);
+    font-style: italic;
+  }
+
+  /* ============================================
+     FOOTER
+     ============================================ */
+  .footer {
+    background:
+      radial-gradient(ellipse at top, #2B1810 0%, #0F0805 70%),
+      var(--char);
+    color: var(--cream);
+    padding: 90px 24px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='nf'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23nf)' opacity='0.1'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .footer-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+  }
+
+  .footer-stamp {
+    width: 140px;
+    height: 140px;
+    border: 4px solid var(--flame);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--flame);
+    transform: rotate(-8deg);
+    font-family: 'Alfa Slab One', serif;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1.1;
+    position: relative;
+  }
+  .footer-stamp::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1.5px solid var(--flame);
+    border-radius: 50%;
+  }
+  .stamp-top { font-size: 10px; letter-spacing: 0.22em; }
+  .stamp-big { font-size: 30px; margin: 4px 0; color: var(--gold-bright); }
+  .stamp-bottom { font-size: 10px; letter-spacing: 0.22em; }
+
+  .footer-message {
+    font-family: 'Alfa Slab One', serif;
+    font-size: clamp(24px, 3.4vw, 38px);
+    text-transform: uppercase;
+    line-height: 1.15;
+  }
+  .footer-message em {
+    color: var(--flame);
+    font-style: italic;
+  }
+
+  .footer-cta {
+    display: inline-block;
+    background: var(--flame);
+    color: var(--cream);
+    border: 3px solid var(--gold-bright);
+    padding: 18px 40px;
+    font-family: 'Alfa Slab One', serif;
+    font-size: 15px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 6px 0 -2px var(--mahog), 0 12px 28px -6px rgba(0,0,0,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .footer-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 0 -2px var(--mahog), 0 16px 32px -6px rgba(0,0,0,0.5);
+  }
+  .footer-cta:active {
+    transform: translateY(2px);
+    box-shadow: 0 4px 0 -2px var(--mahog), 0 8px 20px -6px rgba(0,0,0,0.4);
+  }
+
+  .footer-meta {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: rgba(250, 241, 220, 0.6);
+    text-transform: uppercase;
+    line-height: 1.8;
+    padding-top: 28px;
+    border-top: 1px dashed rgba(232, 181, 71, 0.3);
+    width: 100%;
+    max-width: 540px;
+  }
+
+  /* ============================================
+     MOBILE OPTIMIZATION
+     ============================================ */
+  @media (max-width: 720px) {
+    /* Tame section padding so mobile doesn't feel airy and empty */
+    .section-wrap { padding: 64px 20px; }
+    .stakes { padding: 64px 20px; }
+    .cape-wrap { padding: 72px 20px 90px; }
+    .footer { padding: 64px 20px 48px; }
+
+    /* Hero: smaller brand shadow stack, tighter padding */
+    .hero { padding: 90px 20px 80px; min-height: 88vh; }
+    .brand {
+      text-shadow:
+        2px 2px 0 var(--mahog),
+        4px 4px 0 var(--rust),
+        6px 6px 16px rgba(0,0,0,0.6);
+    }
+    .pre-title { letter-spacing: 0.28em; margin-bottom: 20px; }
+    .pre-title::before, .pre-title::after { width: 28px; }
+    .underline-flair .swoop { width: 80px; }
+    .tagline { font-size: 16px; padding: 0 4px; }
+
+    /* Section heads */
+    .section-head { margin-bottom: 40px; }
+    .section-eyebrow { font-size: 10px; letter-spacing: 0.24em; }
+
+    /* Stakes: reduce vertical breathing room */
+    .stakes-head { margin-bottom: 40px; }
+    .stakes-grid { padding: 28px 12px; }
+    .stake { padding: 22px 10px; }
+    .stake-icon-wrap { width: 44px; height: 44px; margin-bottom: 10px; }
+    .stake-label { font-size: 9px; letter-spacing: 0.18em; }
+
+    /* Paths */
+    .path { padding: 28px 22px 24px; }
+    .path-stamp { font-size: 10px; padding: 5px 12px; }
+    .path-headline { font-size: 15px; }
+    .path-list li { font-size: 14px; padding: 8px 0 8px 22px; }
+    .window-callout { padding: 28px 22px; }
+
+    /* Roadmap phases stacked vertically — keep the badge size proportional */
+    .phase-badge { width: 120px; height: 120px; margin-bottom: 18px; }
+    .phase-badge-icon { width: 44px; height: 44px; }
+    .phase-badge-num { font-size: 19px; }
+    .phase-name { font-size: 18px; min-height: 0; margin-bottom: 12px; }
+
+    /* Cape */
+    .cape-ribbon-top { font-size: 11px; padding: 6px 16px 8px; }
+    .cape-time { font-size: 11px; letter-spacing: 0.22em; }
+    .cape-pillar-num { font-size: 36px; }
+    .cape-pillar-head { font-size: 15px; }
+    .cape-pillar-body { font-size: 14px; }
+    .cape-roi { padding: 28px 22px; }
+    .cape-bottom-note { padding: 22px 18px; font-size: 16px; }
+    .cape-connection { font-size: 13px; padding: 14px 14px; }
+
+    /* Value cards */
+    .value-card { padding: 24px 22px; }
+    .value-card-title { font-size: 18px; }
+    .value-card-icon { width: 32px; height: 32px; }
+    .value-row { font-size: 14px; }
+    .value-row.savings .v-num { font-size: 16px; }
+    .value-total { padding: 40px 24px; }
+    .value-total-quote { font-size: 15px; padding-top: 22px; margin-top: 24px; }
+
+    /* Arc chart — let it breathe vertically on small screens */
+    .arc-card { padding: 32px 22px 28px; }
+    .arc-stamp { font-size: 10px; padding: 6px 12px; letter-spacing: 0.22em; }
+    .arc-chart { height: 200px; }
+    .arc-stop-val { font-size: 19px; }
+    .arc-stop:last-child .arc-stop-val { font-size: 22px; }
+    .arc-stop-desc { font-size: 12px; }
+
+    /* Marketing */
+    .mkt-pillar { padding: 26px 22px; }
+    .mkt-pillar-icon { width: 48px; height: 48px; margin-bottom: 14px; }
+    .mkt-pillar-name { font-size: 16px; }
+    .mkt-pillar-body { font-size: 13px; }
+    .mkt-budget-head { font-size: 13px; padding: 14px 18px; }
+    .mkt-budget-table > div { padding: 12px 16px; font-size: 13px; }
+    .mkt-callout { padding: 20px 18px; font-size: 16px; }
+
+    /* Steps */
+    .step { padding: 22px 22px; }
+    .step-seal { width: 76px; height: 76px; }
+    .step-seal-num { font-size: 26px; }
+    .step-title { font-size: 17px; }
+    .step-body { font-size: 14px; }
+    .urgency-callout { padding: 30px 24px; }
+
+    /* Footer */
+    .footer-inner { gap: 28px; }
+    .footer-stamp { width: 110px; height: 110px; }
+    .stamp-big { font-size: 24px; }
+    .footer-cta { padding: 16px 30px; font-size: 13px; letter-spacing: 0.14em; }
+    .footer-meta { font-size: 10px; letter-spacing: 0.18em; }
+  }
+
+  /* Extra tightening for tiny phones */
+  @media (max-width: 400px) {
+    .section-wrap { padding: 52px 16px; }
+    .stakes { padding: 52px 16px; }
+    .cape-wrap { padding: 60px 16px 80px; }
+    .hero { padding: 80px 16px 70px; }
+    .nav-inner { padding: 0 16px; }
+    .nav-brand { font-size: 18px; }
+    .stakes-grid { grid-template-columns: 1fr; }
+    .stake { border-right: none !important; border-bottom: 1px dashed rgba(232, 181, 71, 0.3); }
+    .stake:last-of-type { border-bottom: none; }
+    .phase-badge { width: 108px; height: 108px; }
+    .phase-badge-icon { width: 40px; height: 40px; }
+    .arc-chart { height: 170px; }
+  }
+
+  /* ============================================
+     PRINT
+     ============================================ */
+  @media print {
+    body { background: white; }
+    .nav, .scroll-cue { display: none; }
+    .smoke { display: none; }
+    .arc-curve { stroke-dashoffset: 0; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+    .arc-marker { opacity: 1 !important; animation: none !important; }
+    section { page-break-inside: avoid; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .smoke { animation: none; opacity: 0.2; }
+    .arc-marker { animation: none; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
 </head>
 <body>
 
-  <nav class="brand-nav">
-    <div class="mark">Triple C's</div>
-    <ul>
-      <li><a href="index.html" class="active">The Roadmap</a></li>
-      <li><a href="cape-cod.html">Cape Cod 1.5</a></li>
-      <li><a href="valuation.html">The Valuation Arc</a></li>
-      <li><a href="the-window.html">Why Now</a></li>
+<!-- ============================================
+     STICKY NAV
+     ============================================ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-brand">Triple C's</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#opportunity">Vision</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#cape">Cape Cod</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#arc">Trajectory</a></li>
+      <li><a href="#next">Next</a></li>
+      <li class="nav-docs">
+        <button class="nav-docs-toggle" id="navDocsToggle" aria-haspopup="true" aria-expanded="false">
+          Documents
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+            <path d="M2 3.5 L5 6.5 L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav-docs-menu" id="navDocsMenu">
+          <li><a href="https://docs.google.com/document/d/1s1ofQM1FM-XkyeFux5eEBKDtoXqgkDwLeztO2dPknC0/edit" target="_blank" rel="noopener">Strategic Growth Proposal</a></li>
+          <li><a href="https://docs.google.com/document/d/1zf3BNhPS0UPwNIeX06aHVOob0SVbLxzjbjYkCtaWyfU/edit" target="_blank" rel="noopener">Cape Cod Summer Proposal</a></li>
+        </ul>
+      </li>
     </ul>
-  </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</nav>
 
-  <header class="broadside">
-    <div class="stamp-line">EST. REPUTATION · BOLD PLANS · 2026</div>
-    <h1>Triple C's</h1>
-    <div class="star-divider">★</div>
-    <h2 class="tagline">The Road to a National Brand</h2>
-    <p class="lede">From <em>one smoking pit</em> to a <em>franchise empire</em> &mdash; a 24-month roadmap.</p>
-    <div class="cta-row">
-      <a href="#five-phases" class="btn">The Five Phases</a>
-      <a href="cape-cod.html" class="btn ghost">Cape Cod Parallel Track</a>
+<!-- ============================================
+     HERO
+     ============================================ -->
+<section class="hero" id="top">
+  <div class="smoke-stage">
+    <div class="smoke"></div>
+    <div class="smoke"></div>
+    <div class="smoke"></div>
+    <div class="smoke"></div>
+    <div class="smoke"></div>
+    <div class="smoke"></div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="pre-title">Est. Reputation · Bold Plans · 2026</div>
+    <h1 class="brand">Triple C's</h1>
+    <div class="underline-flair">
+      <svg class="swoop" viewBox="0 0 140 14">
+        <path d="M 2,7 Q 35,2 70,7 T 138,7" fill="none" stroke="#E8B547" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="star">★</span>
+      <svg class="swoop" viewBox="0 0 140 14">
+        <path d="M 2,7 Q 35,12 70,7 T 138,7" fill="none" stroke="#E8B547" stroke-width="2" stroke-linecap="round"/>
+      </svg>
     </div>
-  </header>
+    <div class="brand-sub">The Road to a National Brand</div>
+    <p class="tagline">From <strong>one smoking pit</strong> to a <strong>franchise empire</strong> — a 24-month roadmap.</p>
+  </div>
 
-  <main class="page">
+  <div class="scroll-cue">Scroll</div>
+</section>
 
-    <section class="stat-band">
-      <div class="stat"><span class="icon">⌂</span><div class="val">$5–7M</div><div class="lbl">Today's Ceiling</div></div>
-      <div class="stat"><span class="icon">▰</span><div class="val">$25–35M</div><div class="lbl">5-Unit Value</div></div>
-      <div class="stat"><span class="icon">⚑</span><div class="val">$100M+</div><div class="lbl">Franchise System</div></div>
-      <div class="stat"><span class="icon">✓</span><div class="val">$2–4M</div><div class="lbl">In-House Value</div></div>
-    </section>
+<!-- ============================================
+     STAKES
+     ============================================ -->
+<section class="stakes" id="stakes">
+  <div class="stakes-wrap">
+    <div class="stakes-head reveal">
+      <div class="section-eyebrow">The Stakes</div>
+      <h2 class="section-title">What's on the <em>Table</em></h2>
+      <p class="section-sub">The gap between today's ceiling and what this brand can become — and what it's worth to close it from the inside.</p>
+    </div>
 
-    <section>
-      <div class="section-head">
-        <div class="eyebrow">Executive Summary</div>
-        <h2>A Brand In Disguise</h2>
-        <p>Triple C's is not a restaurant. It is a brand in disguise &mdash; demonstrating three of the four conditions of a nationally franchisable concept. The fourth, operational repeatability, is what this roadmap exists to build.</p>
-      </div>
-      <div class="card-dark">
-        <p>What started as a single barbecue operation has, through Scott's craft and consistency, demonstrated a distinctive product the market is willing to wait in line for, demand that consistently exceeds supply, and a price-to-experience ratio that drives repeat visits and word-of-mouth without any paid marketing infrastructure.</p>
-        <p style="margin-top: 14px;">The path forward is not to work harder. It is to systematize what already works, prove it travels, and build a franchise system that compensates Scott for the brand he has built rather than the hours he personally cooks.</p>
-      </div>
-    </section>
+    <div class="stakes-grid reveal d1">
+      <span class="rivet-tl"></span>
+      <span class="rivet-br"></span>
 
-    <section>
-      <div class="section-head">
-        <div class="eyebrow">Two Paths Forward</div>
-        <h2>Stay The Course, Or Build The System</h2>
-        <p>Both paths start in the same place. They diverge based on the decisions made over the next twelve months.</p>
-      </div>
-      <div class="two-path">
-        <div class="path path-a">
-          <h3>Path A: Stay The Course</h3>
-          <ul>
-            <li>Single-location operation with founder cooking daily</li>
-            <li>Revenue capped at current operating capacity</li>
-            <li>Enterprise value tied to one location and Scott's presence</li>
-            <li>Sale price = trailing cash-flow multiplier (3–4x)</li>
-            <li>Estimated exit ceiling: $3M–$5M</li>
-            <li>Burnout risk increases as demand exceeds capacity</li>
-            <li>No legacy asset beyond Scott's working years</li>
-          </ul>
+      <div class="stake">
+        <div class="stake-icon-wrap">
+          <svg viewBox="0 0 60 60" fill="none">
+            <path d="M10 46 L10 28 L30 12 L50 28 L50 46 Z" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+            <path d="M22 46 L22 32 L38 32 L38 46" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <path d="M18 18 Q18 13 20 11 M26 14 Q26 9 28 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+          </svg>
         </div>
-        <div class="path path-b">
-          <h3>Path B: Build The System</h3>
-          <ul>
-            <li>Systematize, document, replicate across multiple locations</li>
-            <li>Corporate-owned Locations 2 through 5 over 24 months</li>
-            <li>Franchise system with documented operations, proven economics</li>
-            <li>Sale price = EBITDA multiplier (8–12x) + royalty stream</li>
-            <li>Estimated exit potential: $25M–$100M+</li>
-            <li>Scott shifts from cook to brand steward</li>
-            <li>Generational wealth and brand legacy</li>
-          </ul>
+        <div class="stake-value" data-target="$5–7M">$5–7M</div>
+        <div class="stake-label">Today's Ceiling</div>
+      </div>
+
+      <div class="stake">
+        <div class="stake-icon-wrap">
+          <svg viewBox="0 0 60 60" fill="none">
+            <rect x="10" y="26" width="12" height="24" stroke="currentColor" stroke-width="2.5"/>
+            <rect x="24" y="18" width="12" height="32" stroke="currentColor" stroke-width="2.5"/>
+            <rect x="38" y="10" width="12" height="40" stroke="currentColor" stroke-width="2.5"/>
+            <path d="M6 52 L54 52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="stake-value" data-target="$25–35M">$25–35M</div>
+        <div class="stake-label">5-Unit Value</div>
+      </div>
+
+      <div class="stake">
+        <div class="stake-icon-wrap">
+          <svg viewBox="0 0 60 60" fill="none">
+            <circle cx="30" cy="24" r="12" stroke="currentColor" stroke-width="2.5"/>
+            <path d="M18 28 L10 48 L22 42 L30 52 L38 42 L50 48 L42 28" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+            <path d="M25 22 L28 26 L36 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="stake-value" data-target="$100M+">$100M+</div>
+        <div class="stake-label">Franchise System</div>
+      </div>
+
+      <div class="stake">
+        <div class="stake-icon-wrap">
+          <svg viewBox="0 0 60 60" fill="none">
+            <circle cx="30" cy="30" r="24" stroke="currentColor" stroke-width="2"/>
+            <path d="M14 30 L24 40 L46 16" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="stake-value" data-target="$2–4M">$2–4M</div>
+        <div class="stake-label">In-House Value Delivered</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     OPPORTUNITY
+     ============================================ -->
+<section class="opportunity" id="opportunity">
+  <div class="section-wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">The Opportunity</div>
+      <h2 class="section-title">Two Roads <em>Diverge</em></h2>
+      <p class="section-sub" style="margin-left: auto; margin-right: auto;">Same operator. Same product. Two very different five-year outcomes depending on which road we take.</p>
+    </div>
+
+    <div class="paths">
+      <div class="path path-a reveal d1">
+        <div class="path-stamp">Path A</div>
+        <h3 class="path-title">Stay the Course</h3>
+        <p class="path-headline">Operator income capped by one location. Every revenue dollar costs sweat.</p>
+        <ul class="path-list">
+          <li>Single-location dependency on Scott's daily presence</li>
+          <li>No documented systems — knowledge lives in heads</li>
+          <li>Zero franchise infrastructure or transferable IP</li>
+          <li>Brand value tied to one zip code and one operator</li>
+          <li>No buyer pays a premium for "irreplaceable owner"</li>
+          <li>Exit ceiling capped by single-unit cash flow</li>
+        </ul>
+        <div class="path-outcome">
+          <span class="path-outcome-label">5-Year Exit</span>
+          <span class="path-outcome-value">$3–5M</span>
         </div>
       </div>
-    </section>
 
-    <section id="five-phases">
-      <div class="section-head">
-        <div class="eyebrow">The Five Phases</div>
-        <h2>Foundation To Empire</h2>
-        <p>Twenty-four to thirty months. Every stop earns the next.</p>
+      <div class="path path-b reveal d2">
+        <div class="path-stamp">Path B</div>
+        <h3 class="path-title">Build the System</h3>
+        <p class="path-headline">Operator becomes brand. Infrastructure compounds. Equity multiplies.</p>
+        <ul class="path-list">
+          <li>Multi-unit corporate footprint proving repeatability</li>
+          <li>Franchise system generating royalty streams</li>
+          <li>Documented operations transferable to any operator</li>
+          <li>National brand commanding premium pricing</li>
+          <li>Strategic and PE buyers compete for the asset</li>
+          <li>Optionality on partial liquidity events along the way</li>
+        </ul>
+        <div class="path-outcome">
+          <span class="path-outcome-label">5-Year Exit</span>
+          <span class="path-outcome-value">$25M–$100M+</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="window-callout reveal d3">
+      <div class="window-callout-eyebrow">★ The Window ★</div>
+      <div class="window-callout-text">The barbecue category is <em>hot now</em>. National players are circling.<br>The franchise window opens for <em>maybe</em> 24 months.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     ROADMAP
+     ============================================ -->
+<section class="roadmap" id="roadmap">
+  <div class="section-wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">The Five Phases</div>
+      <h2 class="section-title">Foundation to <em>Empire</em></h2>
+      <p class="section-sub" style="margin-left: auto; margin-right: auto;">Twenty-four to thirty months. Each stop earns the next. No phase begins until the prior one is proven.</p>
+    </div>
+
+    <div class="road-container">
+      <div class="road-path-deco">
+        <svg viewBox="0 0 1380 6" preserveAspectRatio="none">
+          <path d="M 0,3 Q 200,1 400,3 T 800,3 T 1380,3"
+                fill="none" stroke="#A03B17" stroke-width="3"
+                stroke-dasharray="8 8" stroke-linecap="round"/>
+        </svg>
       </div>
 
-      <div class="phase-grid">
-        <article class="phase">
-          <div class="phase-num">Phase 01</div>
+      <div class="phases-grid">
+
+        <article class="phase-card reveal d1">
+          <div class="phase-badge">
+            <svg class="phase-badge-icon" viewBox="0 0 48 48" fill="none">
+              <rect x="6" y="8" width="36" height="28" rx="2" stroke="currentColor" stroke-width="2.5"/>
+              <line x1="6" y1="16" x2="42" y2="16" stroke="currentColor" stroke-width="2"/>
+              <line x1="12" y1="22" x2="28" y2="22" stroke="currentColor" stroke-width="2"/>
+              <line x1="12" y1="28" x2="36" y2="28" stroke="currentColor" stroke-width="2"/>
+              <line x1="12" y1="34" x2="24" y2="34" stroke="currentColor" stroke-width="2"/>
+              <path d="M14 40 L34 40 M18 44 L30 44" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="phase-badge-num">PHASE 01</div>
+          </div>
           <div class="phase-time">Months 0–3</div>
-          <h3>Foundation</h3>
-          <ul>
-            <li>Entity structure &amp; trademarks</li>
-            <li>Website &amp; digital launch</li>
-            <li>Recipes &amp; processes captured</li>
-            <li>Location 2 site scouting</li>
-          </ul>
+          <h3 class="phase-name">Foundation</h3>
+          <div class="phase-tags">
+            <div class="phase-tag">Entity restructure &amp; trademarks</div>
+            <div class="phase-tag">Website &amp; digital launch</div>
+            <div class="phase-tag">Recipes &amp; processes documented</div>
+            <div class="phase-tag">Location 2 site scouting</div>
+          </div>
         </article>
 
-        <article class="phase">
-          <div class="phase-num">Phase 02</div>
+        <article class="phase-card reveal d2">
+          <div class="phase-badge">
+            <svg class="phase-badge-icon" viewBox="0 0 48 48" fill="none">
+              <ellipse cx="24" cy="32" rx="18" ry="8" stroke="currentColor" stroke-width="2.5"/>
+              <path d="M6 32 L6 22 Q6 14 24 14 Q42 14 42 22 L42 32" stroke="currentColor" stroke-width="2.5" fill="none"/>
+              <line x1="14" y1="16" x2="14" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="24" y1="16" x2="24" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="34" y1="16" x2="34" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="14" cy="24" r="2" fill="currentColor"/>
+            </svg>
+            <div class="phase-badge-num">PHASE 02</div>
+          </div>
           <div class="phase-time">Months 3–9</div>
-          <h3>Prove the Model</h3>
-          <ul>
-            <li>Location 2 opens as prototype</li>
-            <li>Ops manual battle-tested</li>
-            <li>Unit economics locked in</li>
-            <li>Marketing ROI proven</li>
-          </ul>
+          <h3 class="phase-name">Prove the Model</h3>
+          <div class="phase-tags">
+            <div class="phase-tag">Location 2 opens as prototype</div>
+            <div class="phase-tag">Ops manual battle-tested</div>
+            <div class="phase-tag">Unit economics locked in</div>
+            <div class="phase-tag">Marketing ROI proven</div>
+          </div>
         </article>
 
-        <article class="phase">
-          <div class="phase-num">Phase 03</div>
+        <article class="phase-card reveal d3">
+          <div class="phase-badge">
+            <svg class="phase-badge-icon" viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="2.5"/>
+              <circle cx="24" cy="24" r="13" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M16 24 L22 30 L33 18" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8 8 L4 4 M40 8 L44 4 M8 40 L4 44 M40 40 L44 44" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="phase-badge-num">PHASE 03</div>
+          </div>
           <div class="phase-time">Months 9–15</div>
-          <h3>Franchise Infrastructure</h3>
-          <ul>
-            <li>Locations 3 &amp; 4 open</li>
-            <li>FDD drafted &amp; registered</li>
-            <li>Training program built</li>
-            <li>Site selection playbook documented</li>
-          </ul>
+          <h3 class="phase-name">Franchise Infrastructure</h3>
+          <div class="phase-tags">
+            <div class="phase-tag">Locations 3 &amp; 4 open</div>
+            <div class="phase-tag">FDD drafted &amp; registered</div>
+            <div class="phase-tag">Training program built</div>
+            <div class="phase-tag">Site selection playbook</div>
+          </div>
         </article>
 
-        <article class="phase">
-          <div class="phase-num">Phase 04</div>
+        <article class="phase-card reveal d4">
+          <div class="phase-badge">
+            <svg class="phase-badge-icon" viewBox="0 0 48 48" fill="none">
+              <path d="M10 4 L10 44" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M10 6 L36 6 L30 14 L36 22 L10 22 Z" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+              <circle cx="22" cy="14" r="3" fill="currentColor"/>
+              <path d="M6 44 L14 44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            <div class="phase-badge-num">PHASE 04</div>
+          </div>
           <div class="phase-time">Months 15–24</div>
-          <h3>Controlled Launch</h3>
-          <ul>
-            <li>Location 5 opens</li>
-            <li>First 1–3 franchises awarded</li>
-            <li>Investor conversations begin</li>
-            <li>Hands-on franchisee support</li>
-          </ul>
+          <h3 class="phase-name">Controlled Launch</h3>
+          <div class="phase-tags">
+            <div class="phase-tag">Location 5 opens (corporate)</div>
+            <div class="phase-tag">First 1–3 franchises awarded</div>
+            <div class="phase-tag">Hands-on franchisee support</div>
+            <div class="phase-tag">Investor conversations begin</div>
+          </div>
         </article>
 
-        <article class="phase">
-          <div class="phase-num">Phase 05</div>
+        <article class="phase-card reveal d4">
+          <div class="phase-badge">
+            <svg class="phase-badge-icon" viewBox="0 0 48 48" fill="none">
+              <path d="M6 12 L8 12 L8 38 L6 38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M8 14 L18 14 L15 19 L18 24 L8 24 Z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>
+              <path d="M20 8 L22 8 L22 42 L20 42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M22 10 L34 10 L31 16 L34 22 L22 22 Z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>
+              <path d="M36 14 L38 14 L38 38 L36 38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M38 16 L46 16 L43 21 L46 26 L38 26 Z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>
+            </svg>
+            <div class="phase-badge-num">PHASE 05</div>
+          </div>
           <div class="phase-time">Month 24+</div>
-          <h3>Scale &amp; Exit Optionality</h3>
-          <ul>
-            <li>Aggressive but disciplined expansion</li>
-            <li>National brand campaigns</li>
-            <li>20–50 operating locations</li>
-            <li>PE / strategic exit pathway</li>
-          </ul>
+          <h3 class="phase-name">Scale &amp; Exit</h3>
+          <div class="phase-tags">
+            <div class="phase-tag">Disciplined national expansion</div>
+            <div class="phase-tag">National brand campaigns</div>
+            <div class="phase-tag">20–50 operating locations</div>
+            <div class="phase-tag">PE / strategic exit pathway</div>
+          </div>
         </article>
-      </div>
-    </section>
 
-    <section>
-      <div class="section-head">
-        <div class="eyebrow">Scope of Work</div>
-        <h2>The Five Pillars</h2>
-        <p>The blueprint above is not theoretical. Here is the specific scope of work proposed across every phase.</p>
       </div>
-      <div class="grid-2">
-        <div class="card">
-          <h4>Pillar One</h4>
-          <h3>Strategic Architecture</h3>
-          <p>Designing the multi-entity legal structure with franchise counsel. Building and refining the unit economic model. Coordinating attorneys, CPAs, and consultants as central project manager. Designing franchisee qualification methodology. Leading investor conversations and exit preparation.</p>
-        </div>
-        <div class="card">
-          <h4>Pillar Two</h4>
-          <h3>Systems &amp; Operations Documentation</h3>
-          <p>Converting Scott's craft into transferable, scalable processes. Operations manual, recipe book, training curriculum. Technology stack for each location: POS, inventory, scheduling, training delivery, customer database. Data and reporting infrastructure that makes every location measurable.</p>
-        </div>
-        <div class="card">
-          <h4>Pillar Three</h4>
-          <h3>Digital &amp; Website Infrastructure</h3>
-          <p>Custom website build with mobile-first design optimized for transactions and franchise inquiries. Integrated online ordering for pickup, delivery, and catering. Customer database integration feeding segmented marketing automation. Location pages built to scale, performance infrastructure tuned to Core Web Vitals.</p>
-        </div>
-        <div class="card">
-          <h4>Pillar Four</h4>
-          <h3>Marketing with Extreme Analytics &amp; SEO</h3>
-          <p>Paid acquisition across Meta, Google, YouTube, TikTok. Creative production engine for photo, video, and ad copy. CRO on every funnel. Email and SMS automation with behavioral segmentation. Loyalty design. Multi-touch attribution. Real-time dashboards. Local SEO, content SEO, AI search optimization, backlink acquisition.</p>
-        </div>
-      </div>
-      <div class="card-dark" style="margin-top: 22px;">
-        <h4>Pillar Five</h4>
-        <h3>Franchise System Development</h3>
-        <p>Working alongside franchise counsel and consultants: franchise development website and lead nurturing, franchisee onboarding experience, ongoing marketing support (local launch playbooks, creative assets, corporate marketing services), and franchisee community building.</p>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-head">
-        <div class="eyebrow">Marketing as Investment</div>
-        <h2>Not Cost. Capital.</h2>
-        <p>Every dollar spent on marketing infrastructure now creates compounding returns across every future location.</p>
-      </div>
-      <table class="budget">
-        <thead>
-          <tr><th>Phase</th><th>Monthly Budget Range</th><th>Investment Priority</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Phase 1</td><td>$3,000 – $5,000</td><td>Foundation: website, SEO, ad platform setup, content baseline</td></tr>
-          <tr><td>Phase 2</td><td>$8,000 – $15,000</td><td>Location 2 launch, paid acquisition at two locations, content engine</td></tr>
-          <tr><td>Phase 3</td><td>$15,000 – $25,000</td><td>Locations 3 &amp; 4 launch, franchise inquiry generation, brand building</td></tr>
-          <tr><td>Phase 4</td><td>$25,000 – $40,000</td><td>Franchise sales campaigns, multi-location paid media, PR push</td></tr>
-          <tr><td>Phase 5</td><td>Marketing Fund + Corporate</td><td>National brand campaigns funded by pooled franchise contributions</td></tr>
-        </tbody>
-      </table>
-      <div class="callout"><strong>The ROI Question.</strong> If a paid campaign delivers customers at $12 acquisition cost who generate $48 average ticket and visit 2.4 times in their first year, that is a 9.6x return in twelve months &mdash; before lifetime value. Marketing only feels expensive when it is not measured.</div>
-    </section>
-
-    <section>
-      <div class="section-head">
-        <div class="eyebrow">Risk &amp; Mitigation</div>
-        <h2>Five Honest Risks</h2>
-      </div>
-      <div class="grid-3">
-        <div class="card"><h4>Risk One</h4><h3>Quality Dilution</h3><p>Every location built against documented standards. Every batch measured against documented specs. Phase 1 documentation is the firewall protecting the product Scott built.</p></div>
-        <div class="card"><h4>Risk Two</h4><h3>Founder Burnout</h3><p>Phase 2 explicitly reduces Scott's daily footprint as Location 2 launches. By end of Phase 3, Scott transitions from daily operator to brand steward.</p></div>
-        <div class="card"><h4>Risk Three</h4><h3>Capital Constraints</h3><p>Phase 1 financial cleanup enables SBA financing, equipment financing, and friends-and-family rounds. Capital availability scales with credibility.</p></div>
-        <div class="card"><h4>Risk Four</h4><h3>Franchise System Failure</h3><p>Controlled launch limits franchise sales to 1–3 units in year one. Franchisee qualification, training, and support over-resourced to prevent the failure modes that kill emerging brands.</p></div>
-        <div class="card"><h4>Risk Five</h4><h3>Market Timing</h3><p>Multi-year timeline provides flexibility. Expansion pace calibrates to market conditions. Unit economics built in Phases 1 &amp; 2 are defensible in adverse markets.</p></div>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-head">
-        <div class="eyebrow">Recommended Next Steps</div>
-        <h2>Walk The Roadmap</h2>
-      </div>
-      <div class="grid-2">
-        <div class="card-dark">
-          <h4>Step 1</h4>
-          <h3>Strategic Alignment</h3>
-          <p>Confirm that Scott and family are aligned on the multi-year vision and personal commitment this roadmap requires. Take the time needed to discuss internally.</p>
-        </div>
-        <div class="card-dark">
-          <h4>Step 2</h4>
-          <h3>Engagement Structure</h3>
-          <p>Once alignment is confirmed, define scope clarity, compensation structure, decision-making authority, timeline, and legal documentation in a separate working session.</p>
-        </div>
-        <div class="card-dark">
-          <h4>Step 3</h4>
-          <h3>Professional Advisors</h3>
-          <p>Initiate conversations with franchise-experienced attorney, multi-entity CPA, and restaurant-industry bookkeeper for Phase One.</p>
-        </div>
-        <div class="card-dark">
-          <h4>Step 4</h4>
-          <h3>Phase One Kickoff</h3>
-          <p>Within thirty days: website build initiation, documentation launch, legal and financial cleanup, Location 2 scouting. Phase One does not wait for perfection &mdash; it begins immediately and refines as it goes.</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="brand-footer">
-    <div class="stamp-edge">★ EST ★</div>
-    <div class="stamp-big">NOW</div>
-    <div class="stamp-edge">★ 2026 ★</div>
-    <div class="footer-msg">The window is <em>open</em>.<br>In 24 months it closes.</div>
-    <div class="footer-meta">
-      Prepared by Kyle<br>
-      Strategic Growth Architect<br>
-      Confidential
     </div>
-  </footer>
+  </div>
+</section>
+
+<!-- ============================================
+     CAPE COD CATALYST
+     ============================================ -->
+<section class="cape" id="cape">
+  <div class="cape-wrap">
+    <div class="cape-head reveal">
+      <div class="cape-ribbon-top">★ Parallel Track ★</div>
+      <div class="section-eyebrow">Phase 1.5</div>
+      <h2 class="cape-title">Cape Cod <em>Catalyst</em></h2>
+      <div class="cape-time">Summer 2026 · Catering &amp; Pop-Up Division</div>
+    </div>
+
+    <div class="cape-body">
+      <div class="cape-pillars reveal d1">
+        <div class="cape-pillar">
+          <div class="cape-pillar-num">01</div>
+          <div class="cape-pillar-head">Funds Growth</div>
+          <p class="cape-pillar-body">Catering and pop-up revenue bootstraps Locations 2 and 3 without dilution. No outside capital required to fund the prototype.</p>
+        </div>
+        <div class="cape-pillar">
+          <div class="cape-pillar-num">02</div>
+          <div class="cape-pillar-head">Proves Travel</div>
+          <p class="cape-pillar-body">Brand commands premium pricing 90 minutes from home. The single data point investors most want to see.</p>
+        </div>
+        <div class="cape-pillar">
+          <div class="cape-pillar-num">03</div>
+          <div class="cape-pillar-head">Builds Network</div>
+          <p class="cape-pillar-body">Northeast wealth, wedding industry, press, real estate, future franchisees — all in one summer of placed earned media.</p>
+        </div>
+      </div>
+
+      <div class="cape-roi reveal d2">
+        <div class="cape-roi-num">10×</div>
+        <div class="cape-roi-label">Connection ROI<br>Over 5 Years</div>
+      </div>
+    </div>
+
+    <p class="cape-bottom-note reveal d2">Break-even is nearly impossible to miss. <strong>The real win is the connections.</strong> Every wedding, every pop-up, every catering job places the brand in front of the exact audiences that fund the franchise system.</p>
+
+    <div class="cape-connections reveal d3">
+      <div class="cape-connection"><strong>★ Wealth</strong>Family offices, second-home owners, finance principals</div>
+      <div class="cape-connection"><strong>★ Wedding Industry</strong>Planners, venues, photographers, repeat-rebookings</div>
+      <div class="cape-connection"><strong>★ Press &amp; Media</strong>Regional food press, lifestyle, local TV, Northeast outlets</div>
+      <div class="cape-connection"><strong>★ Real Estate</strong>Site brokers, restaurant operators looking to lease space</div>
+      <div class="cape-connection"><strong>★ Franchisees</strong>Capitalized operators who eat the food and want a unit</div>
+      <div class="cape-connection"><strong>★ Distributors</strong>Specialty food, retail, branded products pipeline</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     VALUE QUANTIFIED
+     ============================================ -->
+<section class="value" id="value">
+  <div class="section-wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">The Value I Bring</div>
+      <h2 class="section-title">What This Is <em>Worth</em></h2>
+      <p class="section-sub" style="margin-left: auto; margin-right: auto;">Every dollar below is real money typically paid to outside vendors. With me in the equity, those dollars stay in the business and fund growth instead of invoices.</p>
+    </div>
+
+    <div class="value-grid">
+      <article class="value-card reveal d1">
+        <div class="value-card-head">
+          <h3 class="value-card-title">Legal &amp; Compliance</h3>
+          <svg class="value-card-icon" viewBox="0 0 48 48" fill="none">
+            <path d="M24 4 L24 44 M14 8 L34 8 M10 16 L18 16 L18 28 Q18 32 14 32 Q10 32 10 28 L10 16 Z M30 16 L38 16 L38 28 Q38 32 34 32 Q30 32 30 28 L30 16 Z M14 40 L34 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="value-rows">
+          <div class="value-row"><span class="v-label">Franchise attorney (FDD drafting)</span><span class="v-num">$25–55K</span></div>
+          <div class="value-row"><span class="v-label">Trademark filings &amp; structure</span><span class="v-num">$5–12K</span></div>
+          <div class="value-row savings"><span class="v-label">Five-year savings</span><span class="v-num">$120–280K</span></div>
+        </div>
+      </article>
+
+      <article class="value-card reveal d2">
+        <div class="value-card-head">
+          <h3 class="value-card-title">Franchise Sales</h3>
+          <svg class="value-card-icon" viewBox="0 0 48 48" fill="none">
+            <path d="M8 12 L40 12 L40 36 L8 36 Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
+            <path d="M8 12 L24 24 L40 12" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <circle cx="36" cy="36" r="6" fill="var(--cream)" stroke="currentColor" stroke-width="2.5"/>
+            <path d="M32 36 L35 39 L40 33" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="value-rows">
+          <div class="value-row"><span class="v-label">Broker commissions ($25–35K / unit)</span><span class="v-num">eliminated</span></div>
+          <div class="value-row"><span class="v-label">Lead generation &amp; qualification</span><span class="v-num">in-house</span></div>
+          <div class="value-row savings"><span class="v-label">50-unit savings</span><span class="v-num">$800K–$1.7M</span></div>
+        </div>
+      </article>
+
+      <article class="value-card reveal d3">
+        <div class="value-card-head">
+          <h3 class="value-card-title">System Build-Out</h3>
+          <svg class="value-card-icon" viewBox="0 0 48 48" fill="none">
+            <rect x="8" y="10" width="32" height="28" rx="2" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <path d="M14 18 L26 18 M14 24 L34 24 M14 30 L30 30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="36" cy="36" r="8" fill="var(--cream)" stroke="currentColor" stroke-width="2.5"/>
+            <path d="M36 32 L36 36 L39 38" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="value-rows">
+          <div class="value-row"><span class="v-label">Ops manual &amp; SOPs</span><span class="v-num">$20–55K</span></div>
+          <div class="value-row"><span class="v-label">Training curriculum</span><span class="v-num">$15–35K</span></div>
+          <div class="value-row"><span class="v-label">Site selection playbook</span><span class="v-num">$13–35K</span></div>
+          <div class="value-row savings"><span class="v-label">Total in-house value</span><span class="v-num">$48–125K</span></div>
+        </div>
+      </article>
+
+      <article class="value-card reveal d4">
+        <div class="value-card-head">
+          <h3 class="value-card-title">Marketing &amp; Digital</h3>
+          <svg class="value-card-icon" viewBox="0 0 48 48" fill="none">
+            <path d="M24 6 L30 22 L46 22 L33 32 L38 46 L24 36 L10 46 L15 32 L2 22 L18 22 Z" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="value-rows">
+          <div class="value-row"><span class="v-label">Agency / paid acquisition mgmt</span><span class="v-num">$60–180K / yr</span></div>
+          <div class="value-row"><span class="v-label">SEO, content, attribution</span><span class="v-num">$60–144K / yr</span></div>
+          <div class="value-row"><span class="v-label">Website, photo, video production</span><span class="v-num">$69–172K / yr</span></div>
+          <div class="value-row savings"><span class="v-label">Annual value delivered</span><span class="v-num">$189–496K</span></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="value-total reveal">
+      <div class="value-total-eyebrow">Five-Year Value Delivered</div>
+      <div class="value-total-num">$1.87M – $3.80M</div>
+      <div class="value-total-label">In-House vs. Outside Vendors</div>
+      <p class="value-total-quote">Three to four million dollars <strong>stays in the business</strong> — funding growth, not vendor checks. That is the economic case for me being in the equity, not on a retainer.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     VALUATION ARC
+     ============================================ -->
+<section class="arc-section" id="arc">
+  <div class="section-wrap arc-wrap">
+    <div class="section-head arc-head reveal">
+      <div class="section-eyebrow">The Trajectory</div>
+      <h2 class="section-title">The Valuation <em>Arc</em></h2>
+      <p class="section-sub">Where the business is today, where each phase takes it, and what a mature franchise system is ultimately worth.</p>
+    </div>
+
+    <div class="arc-card reveal d1">
+      <span class="arc-corner tl"></span>
+      <span class="arc-corner tr"></span>
+      <span class="arc-corner bl"></span>
+      <span class="arc-corner br"></span>
+
+      <div class="arc-stamp">★ Indicative Trajectory ★</div>
+
+      <div class="arc-chart" id="arcChart">
+        <svg viewBox="0 0 1000 220" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="arcFill" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#D4521A" stop-opacity="0.45"/>
+              <stop offset="50%" stop-color="#A03B17" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="#722F1B" stop-opacity="0.05"/>
+            </linearGradient>
+            <linearGradient id="arcStroke" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#722F1B"/>
+              <stop offset="40%" stop-color="#A03B17"/>
+              <stop offset="75%" stop-color="#D4521A"/>
+              <stop offset="100%" stop-color="#E8B547"/>
+            </linearGradient>
+          </defs>
+
+          <line x1="0" y1="55" x2="1000" y2="55" stroke="#A03B17" stroke-opacity="0.1" stroke-dasharray="4 4"/>
+          <line x1="0" y1="110" x2="1000" y2="110" stroke="#A03B17" stroke-opacity="0.1" stroke-dasharray="4 4"/>
+          <line x1="0" y1="165" x2="1000" y2="165" stroke="#A03B17" stroke-opacity="0.1" stroke-dasharray="4 4"/>
+          <line x1="0" y1="205" x2="1000" y2="205" stroke="#A03B17" stroke-opacity="0.3" stroke-width="2"/>
+
+          <path d="M 0,200 C 100,198 180,190 250,170 C 320,150 380,115 500,80 C 620,45 720,28 820,18 C 880,12 940,8 1000,6 L 1000,210 L 0,210 Z" fill="url(#arcFill)"/>
+
+          <path class="arc-curve" d="M 0,200 C 100,198 180,190 250,170 C 320,150 380,115 500,80 C 620,45 720,28 820,18 C 880,12 940,8 1000,6" fill="none" stroke="url(#arcStroke)" stroke-width="5" stroke-linecap="round"/>
+
+          <circle class="arc-marker m1" cx="0" cy="200" r="8" fill="#722F1B" stroke="#F2E4C1" stroke-width="3"/>
+          <circle class="arc-marker m2" cx="250" cy="170" r="8" fill="#1E3A52" stroke="#F2E4C1" stroke-width="3"/>
+          <circle class="arc-marker m3" cx="500" cy="80" r="8" fill="#A03B17" stroke="#F2E4C1" stroke-width="3"/>
+          <circle class="arc-marker m4" cx="750" cy="25" r="8" fill="#D4521A" stroke="#F2E4C1" stroke-width="3"/>
+          <circle class="arc-marker m5" cx="1000" cy="6" r="11" fill="#E8B547" stroke="#F2E4C1" stroke-width="3.5"/>
+
+          <g transform="translate(995, -16)">
+            <path d="M0,18 Q-6,6 0,-6 Q6,0 6,6 Q10,0 8,-10 Q14,-4 14,6 Q14,18 0,18 Z" fill="#E8821B" opacity="0.9">
+              <animateTransform attributeName="transform" type="scale" values="1;1.18;1" dur="1.5s" repeatCount="indefinite"/>
+            </path>
+          </g>
+        </svg>
+      </div>
+
+      <div class="arc-stops">
+        <div class="arc-stop">
+          <div class="arc-stop-time">Today</div>
+          <div class="arc-stop-val">$3–5M</div>
+          <div class="arc-stop-desc">Single-location ceiling</div>
+        </div>
+        <div class="arc-stop">
+          <div class="arc-stop-time">Summer '26</div>
+          <div class="arc-stop-val">$6–8M</div>
+          <div class="arc-stop-desc">Post Cape + Location 2</div>
+        </div>
+        <div class="arc-stop">
+          <div class="arc-stop-time">End of Yr 2</div>
+          <div class="arc-stop-val">$20–28M</div>
+          <div class="arc-stop-desc">5 units + first franchises</div>
+        </div>
+        <div class="arc-stop">
+          <div class="arc-stop-time">Year 4</div>
+          <div class="arc-stop-val">$55–75M</div>
+          <div class="arc-stop-desc">20+ units, royalty stream</div>
+        </div>
+        <div class="arc-stop">
+          <div class="arc-stop-time">Exit Horizon</div>
+          <div class="arc-stop-val">$100M+</div>
+          <div class="arc-stop-desc">Mature franchise system</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     MARKETING ENGINE
+     ============================================ -->
+<section class="marketing" id="marketing">
+  <div class="section-wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">The Marketing Engine</div>
+      <h2 class="section-title">Measured. Built. <em>Compounding.</em></h2>
+      <p class="section-sub" style="margin-left: auto; margin-right: auto;">A franchise system either has predictable customer acquisition or it doesn't. This is the infrastructure that delivers it.</p>
+    </div>
+
+    <div class="mkt-pillars">
+      <article class="mkt-pillar reveal d1">
+        <svg class="mkt-pillar-icon" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="22" stroke="currentColor" stroke-width="2.5"/>
+          <path d="M30 12 L34 26 L48 30 L34 34 L30 48 L26 34 L12 30 L26 26 Z" fill="currentColor" opacity="0.4"/>
+          <circle cx="30" cy="30" r="4" fill="currentColor"/>
+        </svg>
+        <h3 class="mkt-pillar-name">Paid Acquisition</h3>
+        <p class="mkt-pillar-body">Meta, Google, Performance Max, YouTube. Creative engine built in-house. Every dollar attributed to a measurable outcome.</p>
+      </article>
+
+      <article class="mkt-pillar reveal d2">
+        <svg class="mkt-pillar-icon" viewBox="0 0 60 60" fill="none">
+          <rect x="6" y="30" width="10" height="24" stroke="currentColor" stroke-width="2.5"/>
+          <rect x="18" y="20" width="10" height="34" stroke="currentColor" stroke-width="2.5"/>
+          <rect x="30" y="12" width="10" height="42" stroke="currentColor" stroke-width="2.5"/>
+          <rect x="42" y="6" width="10" height="48" stroke="currentColor" stroke-width="2.5"/>
+          <path d="M11 26 L23 16 L35 8 L47 2" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3" fill="none"/>
+        </svg>
+        <h3 class="mkt-pillar-name">Analytics &amp; Attribution</h3>
+        <p class="mkt-pillar-body">POS, website, ad platforms, and email unified into one customer view. Multi-touch attribution drives spending decisions, not vibes.</p>
+      </article>
+
+      <article class="mkt-pillar reveal d3">
+        <svg class="mkt-pillar-icon" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="22" stroke="currentColor" stroke-width="2.5"/>
+          <path d="M30 8 Q14 30 30 52 Q46 30 30 8 Z" stroke="currentColor" stroke-width="2" fill="none"/>
+          <line x1="8" y1="30" x2="52" y2="30" stroke="currentColor" stroke-width="2"/>
+          <line x1="30" y1="8" x2="30" y2="52" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <h3 class="mkt-pillar-name">Cutting-Edge SEO</h3>
+        <p class="mkt-pillar-body">Technical foundation, local domination at every location, and content that compounds organic traffic over years rather than weeks.</p>
+      </article>
+    </div>
+
+    <div class="mkt-budget reveal d2">
+      <div class="mkt-budget-head">Monthly Marketing Budget by Phase</div>
+      <div class="mkt-budget-table">
+        <div class="mh">Phase</div><div class="mh">Monthly Spend</div><div class="mh">Focus</div>
+        <div>Phase 01 — Foundation</div><div class="mn">$2–3K</div><div>Brand build, website launch, initial creative</div>
+        <div>Phase 02 — Prove the Model</div><div class="mn">$5–10K</div><div>Location 2 launch, attribution stack, local SEO</div>
+        <div>Phase 03 — Infrastructure</div><div class="mn">$10–18K</div><div>Multi-location campaigns, franchise lead gen</div>
+        <div>Phase 04 — Controlled Launch</div><div class="mn">$18–30K</div><div>National brand campaigns, franchisee pipeline</div>
+        <div>Phase 05 — Scale &amp; Exit</div><div class="mn">$25–40K</div><div>Category dominance, exit-narrative positioning</div>
+      </div>
+    </div>
+
+    <p class="mkt-callout reveal d3">Marketing only feels expensive <strong>when it isn't measured.</strong> Every dollar in this plan ties to an attributable outcome — that's why we keep spending it.</p>
+  </div>
+</section>
+
+<!-- ============================================
+     NEXT STEPS
+     ============================================ -->
+<section class="next" id="next">
+  <div class="section-wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">The Decision</div>
+      <h2 class="section-title">Next <em>Steps</em></h2>
+      <p class="section-sub" style="margin-left: auto; margin-right: auto;">Five clean steps from internal alignment to Phase 01 kickoff. Each one decided before the next begins.</p>
+    </div>
+
+    <div class="steps">
+      <article class="step reveal d1">
+        <div class="step-seal">
+          <div class="step-seal-num">01</div>
+          <div class="step-seal-label">Align</div>
+        </div>
+        <div class="step-content">
+          <h3 class="step-title">Internal Alignment</h3>
+          <p class="step-body">Scott and family review the full proposal package together. Decide whether the franchise pathway is the direction. Surface every question, concern, and condition.</p>
+        </div>
+      </article>
+
+      <article class="step reveal d1">
+        <div class="step-seal">
+          <div class="step-seal-num">02</div>
+          <div class="step-seal-label">Decide</div>
+        </div>
+        <div class="step-content">
+          <h3 class="step-title">Cape Cod Go / No-Go</h3>
+          <p class="step-body">Decide on the summer 2026 Cape Cod division. Timing is the constraint — permits, venue relationships, and event-sales pipeline have to be built before Memorial Day. The window is tight.</p>
+        </div>
+      </article>
+
+      <article class="step reveal d2">
+        <div class="step-seal">
+          <div class="step-seal-num">03</div>
+          <div class="step-seal-label">Engage</div>
+        </div>
+        <div class="step-content">
+          <h3 class="step-title">Professional Advisors</h3>
+          <p class="step-body">Engage franchise-experienced attorney, CPA familiar with multi-entity and franchise structures, and bookkeeper with restaurant industry expertise. Begin Phase 01 legal and financial cleanup.</p>
+        </div>
+      </article>
+
+      <article class="step reveal d2">
+        <div class="step-seal">
+          <div class="step-seal-num">04</div>
+          <div class="step-seal-label">Structure</div>
+        </div>
+        <div class="step-content">
+          <h3 class="step-title">Partnership Terms</h3>
+          <p class="step-body">Agree on the structure of the long-term engagement — scope, milestones, and the equity-and-retainer framework that aligns my incentives with the eventual outcome rather than monthly invoices.</p>
+        </div>
+      </article>
+
+      <article class="step reveal d3">
+        <div class="step-seal">
+          <div class="step-seal-num">05</div>
+          <div class="step-seal-label">Launch</div>
+        </div>
+        <div class="step-content">
+          <h3 class="step-title">Phase 01 Kickoff</h3>
+          <p class="step-body">Within thirty days of engagement, foundational work begins: website build initiation, documentation process launch, legal and financial cleanup, Location 2 site scouting.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="urgency-callout reveal">
+      <div class="urgency-callout-eyebrow">★ Time-Sensitive ★</div>
+      <div class="urgency-callout-text">The Cape Cod window closes by <em>mid-March</em>.<br>Decision required within <em>30 days</em>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-stamp">
+      <div class="stamp-top">★ EST ★</div>
+      <div class="stamp-big">NOW</div>
+      <div class="stamp-bottom">★ 2026 ★</div>
+    </div>
+
+    <div class="footer-message">
+      The window is <em>open</em>.<br>In 24 months it closes.
+    </div>
+
+    <a href="#top" class="footer-cta">Back to the Top</a>
+
+    <div class="footer-meta">
+      Prepared by Kyle · Strategic Growth Architect<br>
+      Confidential · For Triple C's Ownership
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ============================================
+  // Sticky nav reveal
+  // ============================================
+  const nav = document.getElementById('nav');
+  const hero = document.querySelector('.hero');
+  const heroHeight = () => hero.offsetHeight;
+
+  let lastY = 0;
+  function onScroll() {
+    const y = window.scrollY;
+    if (y > heroHeight() - 100) {
+      nav.classList.add('visible');
+    } else {
+      nav.classList.remove('visible');
+    }
+    lastY = y;
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ============================================
+  // Mobile nav toggle
+  // ============================================
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href');
+      // External links (Google Doc, etc.) pass through normally
+      if (!href || !href.startsWith('#')) {
+        navLinks.classList.remove('open');
+        return;
+      }
+      // In-page anchors: handle scroll ourselves to avoid race condition with menu close
+      e.preventDefault();
+      const target = document.querySelector(href);
+      navLinks.classList.remove('open');
+      if (target) {
+        // Tiny delay lets the menu collapse before we scroll
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Update the URL hash without jumping
+          history.pushState(null, '', href);
+        }, 50);
+      }
+    });
+  });
+
+  // ============================================
+  // Documents submenu toggle
+  // ============================================
+  const docsToggle = document.getElementById('navDocsToggle');
+  const docsParent = docsToggle ? docsToggle.parentElement : null;
+  if (docsToggle && docsParent) {
+    docsToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = docsParent.classList.toggle('open');
+      docsToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!docsParent.contains(e.target)) {
+        docsParent.classList.remove('open');
+        docsToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        docsParent.classList.remove('open');
+        docsToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // ============================================
+  // Reveal on scroll
+  // ============================================
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // ============================================
+  // Arc chart draw
+  // ============================================
+  const arcChart = document.getElementById('arcChart');
+  if (arcChart) {
+    const arcObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => arcChart.classList.add('drawn'), 200);
+          arcObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    arcObserver.observe(arcChart);
+  }
+</script>
 
 </body>
 </html>
